@@ -2,7 +2,7 @@ pub fn solve(challenge: &str) -> (i32, i32) {
     let mut floor: i32 = 0;
     let mut instruction_count = 1;
     let mut negative_floor_instruction = 0;
-    for c in challenge.chars() {
+    challenge.chars().for_each(|c| {
         match c {
             '(' => floor += 1,
             ')' => floor -= 1,
@@ -13,7 +13,7 @@ pub fn solve(challenge: &str) -> (i32, i32) {
         }
 
         instruction_count += 1;
-    }
+    });
 
     (floor, negative_floor_instruction)
 }
