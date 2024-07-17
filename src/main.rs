@@ -1,13 +1,19 @@
-mod day01;
+use std::collections::HashMap;
+
 mod fetcher;
+mod year2015;
 
 fn main() {
-    let challenge = fetcher::fetch_challenge(1, 2015);
-    match challenge {
-        Ok(challenge) => {
-            let (floor, instruction) = day01::solve(&challenge);
-            println!("{}, {}", floor, instruction);
+    let solutions = HashMap::from([(2015, [year2015::day01::solve, year2015::day02::solve])]);
+    for (year, solvers) in solutions {
+        for i in 1..=solvers.len() {
+            match fetcher::fetch_challenge(i as u32, year) {
+                Ok(challenge) => {
+                    let (first, second) = solvers[i - 1](&challenge);
+                    println!("Year {}, Day {}: {}, {}", year, i, first, second);
+                }
+                Err(e) => eprintln!("Error fetching challenge: {}", e),
+            }
         }
-        Err(e) => eprintln!("Error fetching challenge: {}", e),
     }
 }
