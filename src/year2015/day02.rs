@@ -1,6 +1,13 @@
-pub fn solve(challenge: &str) -> (i32, i32) {
+use std::error::Error;
+
+use crate::{challenge::Fetcher, year2015::YEAR};
+
+pub fn solve(fetcher: &Fetcher) -> Result<(i32, i32), Box<dyn Error>> {
+    let challenge = fetcher.fetch_challenge(YEAR, 2)?;
+
     let mut area = 0;
     let mut ribbon_length = 0;
+
     challenge.lines().for_each(|line| {
         if line.is_empty() {
             return;
@@ -22,5 +29,5 @@ pub fn solve(challenge: &str) -> (i32, i32) {
         ribbon_length += 2 * smallest_face + length * width * height;
     });
 
-    (area as i32, ribbon_length as i32)
+    Ok((area as i32, ribbon_length as i32))
 }

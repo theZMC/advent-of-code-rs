@@ -1,18 +1,29 @@
-use std::collections::HashMap;
+use std::collections::BTreeMap;
 
-mod fetcher;
+mod challenge;
 mod year2015;
 
+type Solution = fn(&challenge::Fetcher) -> Result<(i32, i32), Box<dyn std::error::Error>>;
+
 fn main() {
-    let solutions = HashMap::from([(2015, [year2015::day01::solve, year2015::day02::solve])]);
-    for (year, solvers) in solutions {
-        for i in 1..=solvers.len() {
-            match fetcher::fetch_challenge(i as u32, year) {
-                Ok(challenge) => {
-                    let (first, second) = solvers[i - 1](&challenge);
-                    println!("Year {}, Day {}: {}, {}", year, i, first, second);
+    let solutions = BTreeMap::from([(
+        2015,
+        BTreeMap::from([
+            (1, year2015::day01::solve as Solution),
+            (2, year2015::day02::solve as Solution),
+            (3, year2015::day03::solve as Solution),
+        ]),
+    )]);
+
+    let fetcher = challenge::Fetcher::new();
+
+    for (year, days) in solutions {
+        for (day, solution) in days {
+            match solution(&fetcher) {
+                Ok((first, second)) => {
+                    println!("Year {}, Day {:>02}: {}, {}", year, day, first, second)
                 }
-                Err(e) => eprintln!("Error fetching challenge: {}", e),
+                Err(e) => eprintln!("Error solving challenge: {}", e),
             }
         }
     }
