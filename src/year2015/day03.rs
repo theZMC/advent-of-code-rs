@@ -2,13 +2,13 @@ use std::{collections::HashSet, error::Error};
 
 use crate::{challenge::Fetcher, year2015::YEAR};
 
-pub fn solve(fetcher: &Fetcher) -> Result<(i32, i32), Box<dyn Error>> {
+pub fn solve(fetcher: &Fetcher) -> Result<(String, String), Box<dyn Error>> {
     let challenge = fetcher.fetch_challenge(YEAR, 3)?;
 
     Ok((solve_part1(&challenge), solve_part2(&challenge)))
 }
 
-fn solve_part1(challenge: &str) -> i32 {
+pub(super) fn solve_part1(challenge: &str) -> String {
     let mut visited: HashSet<(i64, i64)> = HashSet::new();
 
     let mut last_visited = (0, 0);
@@ -29,10 +29,10 @@ fn solve_part1(challenge: &str) -> i32 {
         visited.insert(last_visited);
     });
 
-    visited.len() as i32
+    visited.len().to_string()
 }
 
-fn solve_part2(challenge: &str) -> i32 {
+pub(super) fn solve_part2(challenge: &str) -> String {
     let mut visited = HashSet::new();
 
     let mut santa_last_visited = (0, 0);
@@ -60,5 +60,5 @@ fn solve_part2(challenge: &str) -> i32 {
         visited.insert(*last_visited);
     });
 
-    visited.len() as i32
+    visited.len().to_string()
 }

@@ -3,7 +3,7 @@ use std::collections::BTreeMap;
 mod challenge;
 mod year2015;
 
-type Solution = fn(&challenge::Fetcher) -> Result<(i32, i32), Box<dyn std::error::Error>>;
+type Solution = fn(&challenge::Fetcher) -> Result<(String, String), Box<dyn std::error::Error>>;
 
 fn main() {
     let solutions = BTreeMap::from([(

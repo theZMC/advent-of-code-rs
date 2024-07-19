@@ -2,7 +2,7 @@ use std::error::Error;
 
 use crate::{challenge::Fetcher, year2015::YEAR};
 
-pub fn solve(fetcher: &Fetcher) -> Result<(i32, i32), Box<dyn Error>> {
+pub fn solve(fetcher: &Fetcher) -> Result<(String, String), Box<dyn Error>> {
     let challenge = fetcher.fetch_challenge(YEAR, 1)?;
 
     let mut floor: i32 = 0;
@@ -22,5 +22,5 @@ pub fn solve(fetcher: &Fetcher) -> Result<(i32, i32), Box<dyn Error>> {
         instruction_count += 1;
     });
 
-    Ok((floor, negative_floor_instruction))
+    Ok((floor.to_string(), negative_floor_instruction.to_string()))
 }
