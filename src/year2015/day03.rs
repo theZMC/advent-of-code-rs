@@ -8,7 +8,7 @@ pub fn solve(fetcher: &Fetcher) -> Result<(String, String), Box<dyn Error>> {
     Ok((solve_part1(&challenge), solve_part2(&challenge)))
 }
 
-pub(super) fn solve_part1(challenge: &str) -> String {
+fn solve_part1(challenge: &str) -> String {
     let mut visited: HashSet<(i64, i64)> = HashSet::new();
 
     let mut last_visited = (0, 0);
@@ -32,7 +32,7 @@ pub(super) fn solve_part1(challenge: &str) -> String {
     visited.len().to_string()
 }
 
-pub(super) fn solve_part2(challenge: &str) -> String {
+fn solve_part2(challenge: &str) -> String {
     let mut visited = HashSet::new();
 
     let mut santa_last_visited = (0, 0);
