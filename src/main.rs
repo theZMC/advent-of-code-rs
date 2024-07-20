@@ -13,6 +13,7 @@ fn main() {
             (2, year2015::day02::solve as Solution),
             (3, year2015::day03::solve as Solution),
             (4, year2015::day04::solve as Solution),
+            (5, year2015::day05::solve as Solution),
         ]),
     )]);
 
