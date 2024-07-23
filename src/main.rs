@@ -26,6 +26,7 @@ fn main() {
             (4, year2015::day04::solve as Solution),
             (5, year2015::day05::solve as Solution),
             (6, year2015::day06::solve as Solution),
+            (7, year2015::day07::solve as Solution),
         ]),
     )]);
 
@@ -44,11 +45,9 @@ fn main() {
 
             let fetcher = challenge::Fetcher::new();
             match solution(&fetcher) {
-                Ok((first, second)) => {
-                    println!(
-                        "Year {}, Day {:>02}: {}, {}",
-                        selected_year, selected_day, first, second
-                    )
+                Ok((part_one, part_two)) => {
+                    println!("Part 1\n{}", part_one);
+                    println!("Part 2\n{}", part_two);
                 }
                 Err(e) => eprintln!("Error solving challenge: {}", e),
             }
