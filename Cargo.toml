@@ -12,3 +12,4 @@ fancy-regex = { version = "0.13.0" }
 chrono = "0.4.38"
 crossterm = "0.27.0"
 itertools = "0.13.0"
+serde_json = "1.0.120"

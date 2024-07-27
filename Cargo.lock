@@ -27,6 +27,7 @@ dependencies = [
  "itertools",
  "md5",
  "reqwest",
+ "serde_json",
 ]
 
 [[package]]
