@@ -26,6 +26,8 @@ impl Fetcher {
             .get(format_url(year, day))
             .header("Cookie", format!("session={}", self.session))
             .send()?
-            .text()?)
+            .text()?
+            .trim()
+            .to_string())
     }
 }
