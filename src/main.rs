@@ -1,13 +1,13 @@
 use crossterm::{
-    cursor,
+    cursor::{self, Hide, MoveTo},
     event::{self, Event, KeyCode, KeyEvent},
-    terminal::{disable_raw_mode, enable_raw_mode},
+    terminal::{disable_raw_mode, enable_raw_mode, Clear, ClearType::All},
     ExecutableCommand,
 };
 use std::{
     collections::{BTreeMap, BTreeSet},
     error::Error,
-    io::Write,
+    io::{stdout, Write},
 };
 
 mod challenge;
@@ -30,6 +30,7 @@ fn main() {
             (8, year2015::day08::solve as Solution),
             (9, year2015::day09::solve as Solution),
             (10, year2015::day10::solve as Solution),
+            (11, year2015::day11::solve as Solution),
         ]),
     )]);
 
@@ -67,15 +68,13 @@ fn user_selection(choices: &BTreeMap<i32, BTreeSet<i32>>) -> Result<(i32, i32), 
     let mut selected_day = *choices.get(&selected_year).unwrap().iter().max().unwrap();
 
     enable_raw_mode()?;
-    let mut stdout = std::io::stdout();
-    stdout.execute(cursor::Hide)?;
+    let mut stdout = stdout();
+    stdout.execute(Hide)?;
 
     let mut selecting_days = true;
     loop {
-        stdout.execute(crossterm::terminal::Clear(
-            crossterm::terminal::ClearType::All,
-        ))?;
-        stdout.execute(cursor::MoveTo(0, 0))?;
+        stdout.execute(Clear(All))?;
+        stdout.execute(MoveTo(0, 0))?;
 
         print!("{}", menu::render((selected_year, selected_day), choices));
         stdout.flush()?;
