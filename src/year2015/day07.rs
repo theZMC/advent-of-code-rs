@@ -1,9 +1,9 @@
 use fancy_regex::Regex;
-use std::collections::HashMap;
+use std::{collections::HashMap, error::Error};
 
 use crate::{challenge::Fetcher, year2015::YEAR};
 
-pub fn solve(fetcher: &Fetcher) -> Result<(String, String), Box<dyn std::error::Error>> {
+pub fn solve(fetcher: &Fetcher) -> Result<(String, String), Box<dyn Error>> {
     let challenge = fetcher.fetch_challenge(YEAR, 7)?;
 
     Ok((solve_part1(&challenge), solve_part2(&challenge)))

@@ -1,9 +1,9 @@
 use itertools::Itertools;
-use std::collections::BTreeMap;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::{challenge::Fetcher, year2015::YEAR};
 
-pub fn solve(fetcher: &Fetcher) -> Result<(String, String), Box<dyn std::error::Error>> {
+pub fn solve(fetcher: &Fetcher) -> Result<(String, String), Box<dyn Error>> {
     let challenge = fetcher.fetch_challenge(YEAR, 9)?;
 
     let mut cities = BTreeMap::<&str, BTreeMap<&str, u32>>::new();

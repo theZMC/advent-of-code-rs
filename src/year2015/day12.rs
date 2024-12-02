@@ -1,8 +1,10 @@
+use std::error::Error;
+
 use serde_json::Value;
 
 use crate::{challenge::Fetcher, year2015::YEAR};
 
-pub fn solve(fetcher: &Fetcher) -> Result<(String, String), Box<dyn std::error::Error>> {
+pub fn solve(fetcher: &Fetcher) -> Result<(String, String), Box<dyn Error>> {
     let challenge = fetcher.fetch_challenge(YEAR, 12)?;
     Ok((solve_part1(&challenge), solve_part2(&challenge)))
 }
