@@ -23,10 +23,17 @@ fn parse_line(line: &str) -> (i64, i64) {
 }
 
 fn solve_part1(challenge: &str) -> String {
-    let (left, right): (BinaryHeap<_>, BinaryHeap<_>) = challenge.lines().map(parse_line).unzip();
+    let (left, right) = challenge.lines().map(parse_line).fold(
+        (BinaryHeap::new(), BinaryHeap::new()),
+        |(mut left, mut right), (left_part, right_part)| {
+            left.push(left_part);
+            right.push(right_part);
+            (left, right)
+        },
+    );
 
     left.into_sorted_vec()
-        .into_iter()
+        .iter()
         .zip(right.into_sorted_vec())
         .map(|(l, r)| (l - r).abs())
         .sum::<i64>()
@@ -35,15 +42,15 @@ fn solve_part1(challenge: &str) -> String {
 
 fn solve_part2(challenge: &str) -> String {
     let (left, right) = challenge.lines().map(parse_line).fold(
-        (BinaryHeap::new(), HashMap::new()),
+        (Vec::new(), HashMap::new()),
         |(mut left, mut right), (left_part, right_part)| {
             left.push(left_part);
-            *right.entry(right_part).or_default() += 1;
+            right.entry(right_part).and_modify(|c| *c += 1).or_insert(1);
             (left, right)
         },
     );
 
-    left.into_iter()
-        .fold(0, |acc, l| acc + right.get(&l).unwrap_or(&0) * l)
+    left.iter()
+        .fold(0, |acc, l| acc + right.get(l).unwrap_or(&0) * l)
         .to_string()
 }
