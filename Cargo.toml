@@ -17,3 +17,4 @@ confique = { version = "0.3.0", features = ["yaml"] }
 serde = "1.0.215"
 dirs = "5.0.1"
 serde_yaml = "0.9.34"
+regex = "1.11.1"
