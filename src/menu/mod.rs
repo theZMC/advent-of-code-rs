@@ -133,6 +133,8 @@ pub fn select(choices: &BTreeMap<i32, BTreeSet<i32>>) -> Result<(i32, i32), Box<
                     SelectType::Year => {
                         if choices.contains_key(&selected_year) {
                             select_type = SelectType::Day;
+                            selected_day =
+                                *choices.get(&selected_year).unwrap().iter().max().unwrap();
                         }
                     }
                     SelectType::Day => {
