@@ -33,6 +33,7 @@ pub fn all() -> BTreeMap<i32, BTreeMap<i32, Solution>> {
             BTreeMap::from([
                 (1, year2024::day01::solve as Solution),
                 (2, year2024::day02::solve as Solution),
+                (3, year2024::day03::solve as Solution),
             ]),
         ),
     ])
