@@ -19,3 +19,4 @@ pub(crate) mod day16;
 pub(crate) mod day17;
 pub(crate) mod day18;
 pub(crate) mod day19;
+pub(crate) mod day20;
