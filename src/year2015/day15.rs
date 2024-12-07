@@ -1,10 +1,15 @@
-use std::{collections::BTreeMap, error::Error};
+use std::{collections::BTreeMap, fmt::Display};
+
+use anyhow::Result;
 
 use crate::{challenge::Fetcher, year2015::YEAR};
 
-pub fn solve(fetcher: &Fetcher) -> Result<(String, String), Box<dyn Error>> {
+pub fn solve(fetcher: &Fetcher) -> Result<(Box<dyn Display>, Box<dyn Display>)> {
     let challenge = fetcher.fetch_challenge(YEAR, 15)?;
-    Ok((solve_part1(&challenge), solve_part2(&challenge)))
+    Ok((
+        Box::new(solve_part1(&challenge)),
+        Box::new(solve_part2(&challenge)),
+    ))
 }
 
 struct Ingredient {

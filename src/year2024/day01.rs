@@ -1,17 +1,21 @@
 use std::{
     collections::{BinaryHeap, HashMap},
-    error::Error,
+    fmt::Display,
 };
 
+use anyhow::Result;
 use itertools::Itertools;
 
 use crate::challenge::Fetcher;
 
 use super::YEAR;
 
-pub fn solve(fetcher: &Fetcher) -> Result<(String, String), Box<dyn Error>> {
+pub fn solve(fetcher: &Fetcher) -> Result<(Box<dyn Display>, Box<dyn Display>)> {
     let challenge = fetcher.fetch_challenge(YEAR, 1)?;
-    Ok((solve_part1(&challenge), solve_part2(&challenge)))
+    Ok((
+        Box::new(solve_part1(&challenge)),
+        Box::new(solve_part2(&challenge)),
+    ))
 }
 
 fn parse_line(line: &str) -> (i64, i64) {

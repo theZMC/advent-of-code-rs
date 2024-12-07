@@ -1,5 +1,5 @@
+use anyhow::Result;
 use reqwest::blocking::Client;
-use std::error::Error;
 
 fn format_url(year: i32, day: u32) -> String {
     format!("https://adventofcode.com/{}/day/{}/input", year, day)
@@ -17,7 +17,7 @@ impl Fetcher {
         Self { client, token }
     }
 
-    pub fn fetch_challenge(&self, year: i32, day: u32) -> Result<String, Box<dyn Error>> {
+    pub fn fetch_challenge(&self, year: i32, day: u32) -> Result<String> {
         Ok(self
             .client
             .get(format_url(year, day))

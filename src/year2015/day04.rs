@@ -1,8 +1,10 @@
-use std::error::Error;
+use std::fmt::Display;
+
+use anyhow::Result;
 
 use crate::{challenge::Fetcher, year2015::YEAR};
 
-pub fn solve(fetcher: &Fetcher) -> Result<(String, String), Box<dyn Error>> {
+pub fn solve(fetcher: &Fetcher) -> Result<(Box<dyn Display>, Box<dyn Display>)> {
     let challenge = fetcher.fetch_challenge(YEAR, 4)?;
 
     let mut five_key = 0;
@@ -31,5 +33,5 @@ pub fn solve(fetcher: &Fetcher) -> Result<(String, String), Box<dyn Error>> {
         }
     }
 
-    Ok((five_key.to_string(), six_key.to_string()))
+    Ok((Box::new(five_key), Box::new(six_key)))
 }

@@ -1,15 +1,19 @@
+use anyhow::Result;
 use fancy_regex::Regex;
-use std::{collections::HashMap, error::Error};
+use std::{collections::HashMap, fmt::Display};
 
 use crate::{challenge::Fetcher, year2015::YEAR};
 
-pub fn solve(fetcher: &Fetcher) -> Result<(String, String), Box<dyn Error>> {
+pub fn solve(fetcher: &Fetcher) -> Result<(Box<dyn Display>, Box<dyn Display>)> {
     let challenge = fetcher.fetch_challenge(YEAR, 7)?;
 
-    Ok((solve_part1(&challenge), solve_part2(&challenge)))
+    Ok((
+        Box::new(solve_part1(&challenge)),
+        Box::new(solve_part2(&challenge)),
+    ))
 }
 
-fn solve_part1(challenge: &str) -> String {
+fn solve_part1(challenge: &str) -> u16 {
     let mut wires = HashMap::<&str, u16>::new();
 
     let start_rgx = Regex::new(r"^(\d+)\s+->\s+(\w+)$").unwrap();
@@ -117,10 +121,10 @@ fn solve_part1(challenge: &str) -> String {
         });
     }
 
-    wires.get("a").unwrap().to_string()
+    *wires.get("a").unwrap()
 }
 
-fn solve_part2(challenge: &str) -> String {
+fn solve_part2(challenge: &str) -> u16 {
     let mut wires = HashMap::<&str, u16>::new();
 
     let start_rgx = Regex::new(r"^(\d+)\s+->\s+(\w+)$").unwrap();
@@ -232,5 +236,5 @@ fn solve_part2(challenge: &str) -> String {
         });
     }
 
-    wires.get("a").unwrap().to_string()
+    *wires.get("a").unwrap()
 }

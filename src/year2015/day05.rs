@@ -1,16 +1,20 @@
-use std::error::Error;
+use std::fmt::Display;
 
+use anyhow::Result;
 use fancy_regex::Regex;
 
 use crate::{challenge::Fetcher, year2015::YEAR};
 
-pub fn solve(fetcher: &Fetcher) -> Result<(String, String), Box<dyn Error>> {
+pub fn solve(fetcher: &Fetcher) -> Result<(Box<dyn Display>, Box<dyn Display>)> {
     let challenge = fetcher.fetch_challenge(YEAR, 5)?;
 
-    Ok((solve_part1(&challenge), solve_part2(&challenge)))
+    Ok((
+        Box::new(solve_part1(&challenge)),
+        Box::new(solve_part2(&challenge)),
+    ))
 }
 
-fn solve_part1(challenge: &str) -> String {
+fn solve_part1(challenge: &str) -> i32 {
     let mut nice_count = 0;
 
     let vowel_rgx = Regex::new(r"(.*[aeiou]){3}").unwrap();
@@ -26,10 +30,10 @@ fn solve_part1(challenge: &str) -> String {
         }
     });
 
-    nice_count.to_string()
+    nice_count
 }
 
-fn solve_part2(challenge: &str) -> String {
+fn solve_part2(challenge: &str) -> i32 {
     let mut nice_count = 0;
     let pair_rgx = Regex::new(r"(..).*\1").unwrap();
     let sandwich_rgx = Regex::new(r"(.).\1").unwrap();
@@ -40,5 +44,5 @@ fn solve_part2(challenge: &str) -> String {
         }
     });
 
-    nice_count.to_string()
+    nice_count
 }

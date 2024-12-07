@@ -1,4 +1,6 @@
-use std::{collections::BTreeSet, error::Error};
+use std::{collections::BTreeSet, fmt::Display};
+
+use anyhow::Result;
 
 mod challenge;
 mod conf;
@@ -7,7 +9,7 @@ mod solutions;
 mod year2015;
 mod year2024;
 
-type Solution = fn(&challenge::Fetcher) -> Result<(String, String), Box<dyn Error>>;
+type Solution = fn(&challenge::Fetcher) -> Result<(Box<dyn Display>, Box<dyn Display>)>;
 
 fn main() {
     let conf = conf::Conf::load_or_create().unwrap();

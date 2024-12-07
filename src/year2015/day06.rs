@@ -1,17 +1,22 @@
 use std::{
     collections::{HashMap, HashSet},
-    error::Error,
+    fmt::Display,
 };
+
+use anyhow::Result;
 
 use crate::{challenge::Fetcher, year2015::YEAR};
 
-pub fn solve(fetcher: &Fetcher) -> Result<(String, String), Box<dyn Error>> {
+pub fn solve(fetcher: &Fetcher) -> Result<(Box<dyn Display>, Box<dyn Display>)> {
     let challenge = fetcher.fetch_challenge(YEAR, 6)?;
 
-    Ok((solve_part1(&challenge), solve_part2(&challenge)))
+    Ok((
+        Box::new(solve_part1(&challenge)),
+        Box::new(solve_part2(&challenge)),
+    ))
 }
 
-fn solve_part1(challenge: &str) -> String {
+fn solve_part1(challenge: &str) -> usize {
     let mut hs = HashSet::new();
 
     challenge.lines().for_each(|line| {
@@ -55,10 +60,10 @@ fn solve_part1(challenge: &str) -> String {
         }
     });
 
-    hs.len().to_string()
+    hs.len()
 }
 
-fn solve_part2(challenge: &str) -> String {
+fn solve_part2(challenge: &str) -> i32 {
     let mut hm = HashMap::new();
 
     challenge.lines().for_each(|line| {
@@ -104,5 +109,5 @@ fn solve_part2(challenge: &str) -> String {
         }
     });
 
-    hm.values().sum::<i32>().to_string()
+    hm.values().sum::<i32>()
 }

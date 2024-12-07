@@ -1,14 +1,19 @@
-use std::{collections::HashSet, error::Error};
+use std::{collections::HashSet, fmt::Display};
+
+use anyhow::Result;
 
 use crate::{challenge::Fetcher, year2015::YEAR};
 
-pub fn solve(fetcher: &Fetcher) -> Result<(String, String), Box<dyn Error>> {
+pub fn solve(fetcher: &Fetcher) -> Result<(Box<dyn Display>, Box<dyn Display>)> {
     let challenge = fetcher.fetch_challenge(YEAR, 3)?;
 
-    Ok((solve_part1(&challenge), solve_part2(&challenge)))
+    Ok((
+        Box::new(solve_part1(&challenge)),
+        Box::new(solve_part2(&challenge)),
+    ))
 }
 
-fn solve_part1(challenge: &str) -> String {
+fn solve_part1(challenge: &str) -> usize {
     let mut visited: HashSet<(i64, i64)> = HashSet::new();
 
     let mut last_visited = (0, 0);
@@ -29,10 +34,10 @@ fn solve_part1(challenge: &str) -> String {
         visited.insert(last_visited);
     });
 
-    visited.len().to_string()
+    visited.len()
 }
 
-fn solve_part2(challenge: &str) -> String {
+fn solve_part2(challenge: &str) -> usize {
     let mut visited = HashSet::new();
 
     let mut santa_last_visited = (0, 0);
@@ -60,5 +65,5 @@ fn solve_part2(challenge: &str) -> String {
         visited.insert(*last_visited);
     });
 
-    visited.len().to_string()
+    visited.len()
 }

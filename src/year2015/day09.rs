@@ -1,9 +1,10 @@
+use anyhow::Result;
 use itertools::Itertools;
-use std::{collections::BTreeMap, error::Error};
+use std::{collections::BTreeMap, fmt::Display};
 
 use crate::{challenge::Fetcher, year2015::YEAR};
 
-pub fn solve(fetcher: &Fetcher) -> Result<(String, String), Box<dyn Error>> {
+pub fn solve(fetcher: &Fetcher) -> Result<(Box<dyn Display>, Box<dyn Display>)> {
     let challenge = fetcher.fetch_challenge(YEAR, 9)?;
 
     let mut cities = BTreeMap::<&str, BTreeMap<&str, u32>>::new();
@@ -41,6 +42,5 @@ pub fn solve(fetcher: &Fetcher) -> Result<(String, String), Box<dyn Error>> {
             min_distance = min_distance.min(distance);
             max_distance = max_distance.max(distance);
         });
-
-    Ok((min_distance.to_string(), max_distance.to_string()))
+    Ok((Box::new(min_distance), Box::new(max_distance)))
 }

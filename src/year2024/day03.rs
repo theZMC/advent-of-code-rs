@@ -1,14 +1,18 @@
-use std::error::Error;
+use std::fmt::Display;
 
+use anyhow::Result;
 use fancy_regex::Regex;
 
 use crate::challenge::Fetcher;
 
 use super::YEAR;
 
-pub fn solve(fetcher: &Fetcher) -> Result<(String, String), Box<dyn Error>> {
+pub fn solve(fetcher: &Fetcher) -> Result<(Box<dyn Display>, Box<dyn Display>)> {
     let challenge = fetcher.fetch_challenge(YEAR, 3)?;
-    Ok((solve_part1(&challenge), solve_part2(&challenge)))
+    Ok((
+        Box::new(solve_part1(&challenge)),
+        Box::new(solve_part2(&challenge)),
+    ))
 }
 
 fn solve_part1(challenge: &str) -> String {
