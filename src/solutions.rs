@@ -29,6 +29,7 @@ pub fn all() -> BTreeMap<i32, BTreeMap<i32, Solution>> {
                 (20, year2015::day20::solve),
                 (21, year2015::day21::solve),
                 (22, year2015::day22::solve),
+                (23, year2015::day23::solve),
             ]),
         ),
         (
